@@ -1,4 +1,4 @@
-package com.marzeta.example.resource;
+package services.users;
 
 import java.util.Collection;
 
@@ -12,29 +12,30 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 
-import model.User;
-import model.UserDao;
-
 @Path(value = "/users")
 public class UsersResource {
 	@Context
 	UriInfo uriInfo;
+
 	@Context
 	Request request;
 
-	public UsersResource() {
+	private final UserDao userDao;
+
+	public UsersResource(UserDao userDao) {
+		this.userDao = userDao;
 	}
 
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
 	@Path("{id}")
 	public UserResource getById(@PathParam("id") String id) {
-		return new UserResource(uriInfo, request, id);
+		return new UserResource(uriInfo, request, userDao, id);
 	}
 
 	@GET
 	@Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-	public Collection<User> getUserByName(@QueryParam("name") String name) {
-		return UserDao.instance.getUserByName(name);
+	public Collection<User> getByName(@QueryParam("name") String name) {
+		return userDao.getUsersByName(name);
 	}
 }
