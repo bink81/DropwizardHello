@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.dropwizard.Configuration;
 
+// This configuration is currently not used
 public class DatabaseConfiguration extends Configuration {
 
 	@JsonProperty
