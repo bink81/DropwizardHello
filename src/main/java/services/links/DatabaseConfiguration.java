@@ -1,4 +1,4 @@
-package services.users;
+package services.links;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

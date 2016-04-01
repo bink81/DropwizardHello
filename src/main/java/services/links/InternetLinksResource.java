@@ -1,4 +1,4 @@
-package services.users;
+package services.links;
 
 import java.net.URI;
 import java.util.Collection;
@@ -26,62 +26,63 @@ import javax.xml.bind.JAXBElement;
 
 import utils.CollectionToListConverter;
 
-@Path(value = "/article")
-public class ArticleLinksResource {
+@Path(value = "/link")
+public class InternetLinksResource {
 	@Context
 	private UriInfo uriInfo;
 	@Context
 	private Request request;
 
-	private final ArticleLinkDao articleLinkDao;
+	private final InternetLinkDao internetLinkDao;
 
-	public ArticleLinksResource(ArticleLinkDao articleLinkDao) {
-		this.articleLinkDao = articleLinkDao;
+	public InternetLinksResource(InternetLinkDao internetLinkDao) {
+		this.internetLinkDao = internetLinkDao;
 	}
 
 	@GET
 	@Path("count")
 	@Produces(MediaType.TEXT_PLAIN)
 	public String getCount() {
-		return String.valueOf(articleLinkDao.getArticleLinkCount());
+		return String.valueOf(internetLinkDao.getInternetLinkCount());
 	}
 
 	@GET
 	@Path("{id}")
 	@Consumes({ MediaType.TEXT_PLAIN })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public ArticleLink getArticleLinkById(@PathParam("id") String id) {
-		return articleLinkDao.getArticleLinkById(id);
+	public InternetLink getInternetLinkById(@PathParam("id") String id) {
+		return internetLinkDao.getInternetLinkById(id);
 	}
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Collection<ArticleLink> getArticleLinks() {
-		return articleLinkDao.getAllArticleLinks();
+	public Collection<InternetLink> getInternetLinks() {
+		return internetLinkDao.getAllInternetLinks();
 	}
 
 	@GET
 	@Consumes({ MediaType.TEXT_PLAIN })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public List<ArticleLink> getByName(@QueryParam("name") String name) {
-		return new CollectionToListConverter<ArticleLink>(articleLinkDao.getArticleLinksByName(name)).convert();
+	public List<InternetLink> getByName(@QueryParam("name") String name) {
+		return new CollectionToListConverter<InternetLink>(internetLinkDao.getInternetLinksByName(name))
+				.convert();
 	}
 
 	@PUT
 	@Consumes({ MediaType.APPLICATION_XML })
 	@Produces({ MediaType.TEXT_HTML })
-	public Response updateArticleLink(JAXBElement<ArticleLink> wrapper) {
-		ArticleLink articleLink = wrapper.getValue();
-		if (articleLink == null) {
+	public Response updateInternetLink(JAXBElement<InternetLink> wrapper) {
+		InternetLink internetLink = wrapper.getValue();
+		if (internetLink == null) {
 			throw new BadRequestException();
 		}
 
 		Response res;
-		if (articleLinkDao.containsId(articleLink.getId())) {
-			articleLinkDao.put(articleLink);
+		if (internetLinkDao.containsId(internetLink.getId())) {
+			internetLinkDao.put(internetLink);
 			res = Response.noContent().build();
 		} else {
-			String newId = articleLinkDao.put(articleLink);
+			String newId = internetLinkDao.put(internetLink);
 			res = Response.created(createNewUri(newId)).build();
 		}
 		return res;
@@ -90,22 +91,22 @@ public class ArticleLinksResource {
 	@POST
 	@Consumes({ MediaType.APPLICATION_XML })
 	@Produces({ MediaType.TEXT_HTML })
-	public Response createArticleLink(@Valid ArticleLink articleLink) {
-		if (articleLink == null) {
+	public Response createInternetLink(@Valid InternetLink internetLink) {
+		if (internetLink == null) {
 			throw new BadRequestException();
 		}
-		String newId = articleLinkDao.put(articleLink);
+		String newId = internetLinkDao.put(internetLink);
 		return Response.created(createNewUri(newId)).build();
 	}
 
 	@POST
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
 	@Produces({ MediaType.TEXT_HTML })
-	public Response createArticleLink(@FormParam("id") String id,
+	public Response createInternetLink(@FormParam("id") String id,
 			@FormParam("name") String name,
 			@FormParam("url") String url) {
-		ArticleLink articleLink = new ArticleLink(id, name, url);
-		String newId = articleLinkDao.put(articleLink);
+		InternetLink internetLink = new InternetLink(id, name, url);
+		String newId = internetLinkDao.put(internetLink);
 		return Response.created(createNewUri(newId)).build();
 	}
 
@@ -119,7 +120,7 @@ public class ArticleLinksResource {
 	@Path("{id}")
 	@Consumes({ MediaType.TEXT_PLAIN })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public ArticleLink deleteArticleLink(@PathParam("id") String id) {
-		return articleLinkDao.delete(id);
+	public InternetLink deleteInternetLink(@PathParam("id") String id) {
+		return internetLinkDao.delete(id);
 	}
 }

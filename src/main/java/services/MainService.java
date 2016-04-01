@@ -8,9 +8,9 @@ import services.hello.HelloHealthCheck;
 import services.hello.HelloResource;
 import services.hello.HelloServiceConfiguration;
 import services.index.IndexResource;
-import services.users.DatabaseHealthCheck;
-import services.users.ArticleLinkDao;
-import services.users.ArticleLinksResource;
+import services.links.DatabaseHealthCheck;
+import services.links.InternetLinkDao;
+import services.links.InternetLinksResource;
 
 public class MainService extends Application<HelloServiceConfiguration> {
 	public static void main(String[] args) throws Exception {
@@ -34,9 +34,9 @@ public class MainService extends Application<HelloServiceConfiguration> {
 		env.healthChecks().register("ConfigurationHealthCheck", new HelloHealthCheck(messages.getGreeting()));
 		env.jersey().register(new HelloResource(messages));
 
-		ArticleLinkDao articleLinkDao = ArticleLinkDao.instance;
-		env.healthChecks().register("DatabaseHealthCheck", new DatabaseHealthCheck(articleLinkDao));
-		env.jersey().register(new ArticleLinksResource(articleLinkDao));
+		InternetLinkDao internetLinkDao = InternetLinkDao.instance;
+		env.healthChecks().register("DatabaseHealthCheck", new DatabaseHealthCheck(internetLinkDao));
+		env.jersey().register(new InternetLinksResource(internetLinkDao));
 
 		env.jersey().register(new IndexResource());
 	}

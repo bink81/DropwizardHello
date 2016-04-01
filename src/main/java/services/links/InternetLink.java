@@ -1,4 +1,4 @@
-package services.users;
+package services.links;
 
 import java.util.Date;
 
@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
 @XmlRootElement // only to generate XML
-public class ArticleLink {
+public class InternetLink {
 	@NotBlank
 	private String id;
 
@@ -21,10 +21,10 @@ public class ArticleLink {
 
 	private final Date modifiedOn = new Date();
 
-	public ArticleLink() {
+	public InternetLink() {
 	}
 
-	public ArticleLink(String id, String name, String url) {
+	public InternetLink(String id, String name, String url) {
 		this.id = id;
 		this.name = name;
 		this.url = url;
@@ -32,7 +32,8 @@ public class ArticleLink {
 
 	@Override
 	public String toString() {
-		return "ArticleLink [id=" + id + ", name=" + name + ", url=" + url + ", createdOn=" + modifiedOn + "]";
+		return "InternetLink [id=" + id + ", name=" + name + ", url=" + url + ", createdOn="
+				+ modifiedOn + "]";
 	}
 
 	public final String getId() {
