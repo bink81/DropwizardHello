@@ -30,6 +30,13 @@ public class ArticleLinksResourceTest {
 	}
 
 	@Test
+	public void testCountAllArticleLinks() throws Exception {
+		Integer expected = ArticleLinkDao.instance.getArticleLinkCount();
+
+		Assert.assertEquals(expected, fetchActualCount());
+	}
+
+	@Test
 	public void testGetAllArticleLinks() throws Exception {
 		String actual = target.path(ARTICLE_PATH).request().accept(MediaType.APPLICATION_JSON)
 				.get(String.class)
