@@ -12,7 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import utils.TestRestUtils;
+import utils.WebServiceUtils;
 
 // Those are not a proper unit tests as they require the server to run and may create side effects if they fail
 public class InternetLinksResourceTest {
@@ -26,7 +26,7 @@ public class InternetLinksResourceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		target = TestRestUtils.createWebTarget();
+		target = WebServiceUtils.createWebTarget();
 	}
 
 	@Test

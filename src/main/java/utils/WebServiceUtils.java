@@ -9,7 +9,7 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.jersey.client.ClientConfig;
 
-public class TestRestUtils {
+public class WebServiceUtils {
 	public static URI getBaseURI() {
 		return UriBuilder.fromUri("http://localhost:8080").build();
 	}
@@ -17,6 +17,6 @@ public class TestRestUtils {
 	public static WebTarget createWebTarget() {
 		ClientConfig config = new ClientConfig();
 		Client client = ClientBuilder.newClient(config);
-		return client.target(TestRestUtils.getBaseURI());
+		return client.target(WebServiceUtils.getBaseURI());
 	}
 }

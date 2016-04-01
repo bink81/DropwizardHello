@@ -5,25 +5,58 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import utils.WebServiceUtils;
+
 @Path("/")
 public class IndexResource {
 
-	public IndexResource() {
+	@GET
+	@Produces(value = MediaType.TEXT_HTML)
+	public String index() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("<html><title>Index</title><body>");
+		builder.append("Available links:");
+		createLink(builder, assembleIndexUrl());
+		createLink(builder, assembleHelloUrl());
+		createLink(builder, assembleHelloPingUrl());
+		createLink(builder, assembleLinksUrl());
+		createLink(builder, assembleLinksUrlForName());
+		createLink(builder, assembleLinksUrlForId());
+		createLink(builder, assembleLinksUrlForCount());
+		builder.append("</body></html>");
+		return builder.toString();
 	}
 
-	@GET
-	@Produces(value = MediaType.TEXT_XML)
-	public String index() {
-		StringBuilder b = new StringBuilder();
-		b.append("<html> <title>Hello</title><body>");
-		String url = "http://localhost:8080/hello?name=12332";
-		b.append("<a href =\"" + url + "\">" + url + "</a>");
-		// List<String> list = new ArrayList<String>();
-		// list.add(e);
-		// list.add("http://localhost:8080/users?name=A");
-		// list.add("http://localhost:8080/users");
-		// list.add("http://localhost:8081");
-		b.append("</body></html>");
-		return b.toString();
+	private void createLink(StringBuilder builder, String url) {
+		builder.append("<br>");
+		builder.append("<a href =\"" + url + "\">" + url + "</a>");
+	}
+
+	private String assembleIndexUrl() {
+		return WebServiceUtils.getBaseURI() + "/";
+	}
+
+	private String assembleHelloUrl() {
+		return WebServiceUtils.getBaseURI() + "/hello?name=exampleName";
+	}
+
+	private String assembleHelloPingUrl() {
+		return WebServiceUtils.getBaseURI() + "/hello/ping";
+	}
+
+	private String assembleLinksUrl() {
+		return WebServiceUtils.getBaseURI() + "/link";
+	}
+
+	private String assembleLinksUrlForName() {
+		return WebServiceUtils.getBaseURI() + "/link?name=A";
+	}
+
+	private String assembleLinksUrlForId() {
+		return WebServiceUtils.getBaseURI() + "/link/1";
+	}
+
+	private String assembleLinksUrlForCount() {
+		return WebServiceUtils.getBaseURI() + "/link/count";
 	}
 }

@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import junit.framework.Assert;
-import utils.TestRestUtils;
+import utils.WebServiceUtils;
 
 public class HelloResourceTest {
 
@@ -16,7 +16,7 @@ public class HelloResourceTest {
 
 	@Before
 	public void setUp() throws Exception {
-		target = TestRestUtils.createWebTarget();
+		target = WebServiceUtils.createWebTarget();
 	}
 
 	@Test
