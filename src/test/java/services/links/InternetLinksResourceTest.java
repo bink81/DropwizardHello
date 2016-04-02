@@ -10,11 +10,18 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
+import services.MainService;
 import utils.WebServiceUtils;
 
-// Those are not a proper unit tests as they require the server to run and may create side effects if they fail
+/**
+ * Those are not a proper unit tests as they start the server and run against its methods. Test may
+ * also create side effects if they fail during execution.
+ *
+ * @author Robert Marzeta
+ */
 public class InternetLinksResourceTest {
 	private static final String EXISTING_ID = "2";
 	private static final String DUMMY_ID = "111";
@@ -23,6 +30,11 @@ public class InternetLinksResourceTest {
 	private static final String INTERNET_PATH = "link";
 
 	private WebTarget target;
+
+	@BeforeClass
+	public static void method() throws Exception {
+		MainService.main(new String[] { "server", "configuration.yml" });
+	}
 
 	@Before
 	public void setUp() throws Exception {

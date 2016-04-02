@@ -5,14 +5,21 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import junit.framework.Assert;
+import services.MainService;
 import utils.WebServiceUtils;
 
 public class HelloResourceTest {
 
 	private WebTarget target;
+
+	@BeforeClass
+	public static void method() throws Exception {
+		MainService.main(new String[] { "server", "configuration.yml" });
+	}
 
 	@Before
 	public void setUp() throws Exception {
