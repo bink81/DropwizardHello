@@ -14,9 +14,9 @@ public enum InternetLinkDao {
 	private final Map<String, InternetLink> internetLinks = new HashMap<String, InternetLink>();
 
 	private InternetLinkDao() {
-		internetLinks.put("1", new InternetLink("1", "A", "Link1"));
-		internetLinks.put("2", new InternetLink("2", "B", "Link2"));
-		internetLinks.put("3", new InternetLink("3", "A", "Link3"));
+		internetLinks.put("1", new InternetLink("1", "A", "Link1", InternetLinkType.ARTICLE));
+		internetLinks.put("2", new InternetLink("2", "B", "Link2", InternetLinkType.NEWS));
+		internetLinks.put("3", new InternetLink("3", "A", "Link3", InternetLinkType.SERVICE));
 	}
 
 	public InternetLink getInternetLinkById(String id) {

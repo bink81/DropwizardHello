@@ -105,7 +105,7 @@ public class InternetLinksResource {
 	public Response createInternetLink(@FormParam("id") String id,
 			@FormParam("name") String name,
 			@FormParam("url") String url) {
-		InternetLink internetLink = new InternetLink(id, name, url);
+		InternetLink internetLink = new InternetLink(id, name, url, InternetLinkType.ARTICLE);
 		String newId = internetLinkDao.put(internetLink);
 		return Response.created(createNewUri(newId)).build();
 	}

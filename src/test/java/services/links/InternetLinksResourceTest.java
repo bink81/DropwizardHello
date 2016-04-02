@@ -110,7 +110,7 @@ public class InternetLinksResourceTest {
 	}
 
 	private InternetLink createDummyInternetLink(String DUMMY_ID) {
-		InternetLink entity = new InternetLink(DUMMY_ID, "B", "2222");
+		InternetLink entity = new InternetLink(DUMMY_ID, "B", "2222", InternetLinkType.NEWS);
 		return entity;
 	}
 }

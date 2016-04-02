@@ -19,21 +19,30 @@ public class InternetLink {
 	@NotBlank
 	private String url;
 
+	@NotBlank
+	private InternetLinkType type;
+
 	private final Date modifiedOn = new Date();
 
 	public InternetLink() {
 	}
 
-	public InternetLink(String id, String name, String url) {
+	public InternetLink(String id, String name, String url, InternetLinkType type) {
 		this.id = id;
 		this.name = name;
 		this.url = url;
+		this.setType(type);
 	}
 
 	@Override
 	public String toString() {
-		return "InternetLink [id=" + id + ", name=" + name + ", url=" + url + ", createdOn="
-				+ modifiedOn + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("InternetLink [id=" + id);
+		builder.append(", name=" + name);
+		builder.append(", url=" + url);
+		builder.append(", type=" + getType());
+		builder.append(", modifiedOn=" + modifiedOn);
+		return builder.append("]").toString();
 	}
 
 	public final String getId() {
@@ -62,5 +71,13 @@ public class InternetLink {
 
 	public final Date getModifiedOn() {
 		return modifiedOn;
+	}
+
+	public InternetLinkType getType() {
+		return type;
+	}
+
+	public void setType(InternetLinkType type) {
+		this.type = type;
 	}
 }
