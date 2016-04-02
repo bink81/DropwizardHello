@@ -1,11 +1,16 @@
 package services.links;
 
-import java.util.ArrayList;
+import static java.util.stream.Collectors.groupingBy;
+
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.base.Preconditions;
 
 public enum InternetLinkDao {
 	instance;
@@ -14,9 +19,14 @@ public enum InternetLinkDao {
 	private final Map<String, InternetLink> internetLinks = new HashMap<String, InternetLink>();
 
 	private InternetLinkDao() {
-		internetLinks.put("1", new InternetLink("1", "A", "Link1", InternetLinkType.ARTICLE));
-		internetLinks.put("2", new InternetLink("2", "B", "Link2", InternetLinkType.NEWS));
-		internetLinks.put("3", new InternetLink("3", "A", "Link3", InternetLinkType.SERVICE));
+		putArticleLink("1", "A", "Link1", InternetLinkType.ARTICLE);
+		putArticleLink("2", "B", "Link2", InternetLinkType.NEWS);
+		putArticleLink("3", "A", "Link3", InternetLinkType.SERVICE);
+	}
+
+	private void putArticleLink(String id, String name, String url, InternetLinkType type) {
+		InternetLink internetLink = new InternetLink(id, name, url, type);
+		internetLinks.put(id, internetLink);
 	}
 
 	public InternetLink getInternetLinkById(String id) {
@@ -28,16 +38,21 @@ public enum InternetLinkDao {
 	}
 
 	public Collection<InternetLink> getInternetLinksByName(String name) {
+		Collection<InternetLink> allLinks = internetLinks.values();
 		if (StringUtils.isBlank(name)) {
-			return internetLinks.values();
+			return allLinks;
 		}
-		Collection<InternetLink> res = new ArrayList<InternetLink>();
-		for (InternetLink internetLink : internetLinks.values()) {
-			if (internetLink.getName().equals(name)) {
-				res.add(internetLink);
-			}
+		Collection<InternetLink> res = groupByName(allLinks).get(name);
+		if (res == null) {
+			return Collections.emptyList();
 		}
 		return res;
+	}
+
+	private Map<String, List<InternetLink>> groupByName(Collection<InternetLink> allLinks) {
+		Map<String, List<InternetLink>> linksByName = allLinks.stream()
+				.collect(groupingBy(InternetLink::getName));
+		return linksByName;
 	}
 
 	public Collection<InternetLink> getAllInternetLinks() {
@@ -61,5 +76,29 @@ public enum InternetLinkDao {
 
 	public int getInternetLinkCount() {
 		return internetLinks.size();
+	}
+
+	public Collection<InternetLink> getInternetLinksByTypeAndName(InternetLinkType type,
+			String name) {
+		Preconditions.checkNotNull(type, "type must not be null!");
+		Preconditions.checkNotNull(name, "name must not be null!");
+		if (StringUtils.isBlank(name)) {
+			throw new IllegalArgumentException("name must not be empty!");
+		}
+
+		Map<InternetLinkType, Map<String, List<InternetLink>>> allTypes = groupByTypeAndName(
+				internetLinks.values());
+		List<InternetLink> res = allTypes.get(type).get(name);
+		if (res == null) {
+			res = Collections.emptyList();
+		}
+		return res;
+	}
+
+	private Map<InternetLinkType, Map<String, List<InternetLink>>> groupByTypeAndName(
+			Collection<InternetLink> allLinks) {
+		Map<InternetLinkType, Map<String, List<InternetLink>>> linksByTypeAndName = allLinks.stream()
+				.collect(groupingBy(InternetLink::getType, groupingBy(InternetLink::getName)));
+		return linksByTypeAndName;
 	}
 }
