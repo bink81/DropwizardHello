@@ -1,14 +1,15 @@
 package services.quotes;
 
+import java.util.UUID;
+
 public class Quote {
-	private final String id;
+	private final String id = UUID.randomUUID().toString();
 	private final Integer episodeNumber;
 	private final String text;
 	private final String author;
 
-	public Quote(String id, Integer episodeNumber, String text, String author) {
+	public Quote(Integer episodeNumber, String text, String author) {
 		super();
-		this.id = id;
 		this.episodeNumber = episodeNumber;
 		this.text = text;
 		this.author = author;

@@ -42,8 +42,9 @@ public class MainService extends Application<HelloServiceConfiguration> {
 		env.jersey().register(new InternetLinksResource(internetLinkDao));
 
 		env.jersey().register(new IndexResource());
+
 		QuoteDao quoteDao = QuoteDao.instance;
-		// new QuoteImporter(quoteDao).importFromFile("");
+		new FavouriteQuoteImporter(quoteDao).loadFile();
 		env.jersey().register(new QuoteResource(quoteDao));
 	}
 }

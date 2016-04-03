@@ -60,9 +60,12 @@ public class QuoteResource {
 	@Path("random")
 	@Produces(MediaType.TEXT_HTML)
 	public String sayHtmlHello() {
-		String response = quoteDao.getRandomQuote().getText();
+		Quote randomQuote = quoteDao.getRandomQuote();
 		return "<html> " + "<title>" + "Hello" + "</title>"
-				+ "<body>Html content:<br><h3>" + response + "</h3><br></body>" + "</html> ";
+				+ "<body>"
+				+ "Quote:<br><h3>" + randomQuote.getText() + "</h3><br>"
+				+ "Author:<br><h3>" + randomQuote.getAuthor() + "</h3><br>"
+				+ "</body>" + "</html> ";
 	}
 
 	@GET

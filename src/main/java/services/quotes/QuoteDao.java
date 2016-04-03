@@ -7,25 +7,32 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import utils.CollectionToListConverter;
 
 public enum QuoteDao {
 	instance;
+	private static final int MAX_LIMIT_FOR_AUTHOR = 200;
+
+	private static final int MAX_LIMIT_FOR_TEXT = 2000;
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(QuoteDao.class);
 
 	// simple database (key = Quote.getId)
 	private final Map<String, Quote> quotes = new HashMap<String, Quote>();
 
-	private QuoteDao() {
-		putArticleLink("1", 1, "Text1", "A");
-		putArticleLink("2", 2, "Text2", "B");
-		putArticleLink("3", 3, "Text3", "A");
-		putArticleLink("4", 4, "Text4", "C");
-		putArticleLink("5", 5, "Text5", "D");
+	public void insertQuote(Quote quote) {
+		warnOfSuspiciouslyLongString(quote.getText(), MAX_LIMIT_FOR_TEXT);
+		warnOfSuspiciouslyLongString(quote.getAuthor(), MAX_LIMIT_FOR_AUTHOR);
+		quotes.put(quote.getId(), quote);
 	}
 
-	private void putArticleLink(String id, Integer episodeNumber, String text, String author) {
-		Quote internetLink = new Quote(id, episodeNumber, text, author);
-		quotes.put(id, internetLink);
+	private void warnOfSuspiciouslyLongString(String string, int maxLimit) {
+		if (string != null && string.length() > maxLimit) {
+			LOGGER.warn("string is suspiciously long: {}", string);
+		}
 	}
 
 	public Quote getQuoteById(String id) {
