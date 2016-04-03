@@ -10,10 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import services.MainService;
 import utils.WebServiceUtils;
 
 /**
@@ -30,11 +28,6 @@ public class InternetLinksResourceTest {
 	private static final String INTERNET_PATH = "link";
 
 	private WebTarget target;
-
-	@BeforeClass
-	public static void method() throws Exception {
-		MainService.main(new String[] { "server", "configuration.yml" });
-	}
 
 	@Before
 	public void setUp() throws Exception {

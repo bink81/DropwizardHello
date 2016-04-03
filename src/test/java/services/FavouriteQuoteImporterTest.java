@@ -3,17 +3,13 @@ package services;
 import java.util.Collection;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import services.quotes.Quote;
 import services.quotes.QuoteDao;
 
+//This is really an integration test and requires a running service
 public class FavouriteQuoteImporterTest {
-
-	@Before
-	public void setUp() throws Exception {
-	}
 
 	@Test
 	public void testLoadFile() throws Exception {

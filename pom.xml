@@ -13,6 +13,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.test.failure.ignore>true</maven.test.failure.ignore>
 	</properties>
 
 	<dependencies>
@@ -81,7 +82,7 @@
 									implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>com.marzeta.example.HelloService</mainClass>
+									<mainClass>services.MainService</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>
