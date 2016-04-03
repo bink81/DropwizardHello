@@ -11,6 +11,8 @@ import services.index.IndexResource;
 import services.links.DatabaseHealthCheck;
 import services.links.InternetLinkDao;
 import services.links.InternetLinksResource;
+import services.quotes.QuoteDao;
+import services.quotes.QuoteResource;
 
 public class MainService extends Application<HelloServiceConfiguration> {
 	public static void main(String[] args) throws Exception {
@@ -24,14 +26,15 @@ public class MainService extends Application<HelloServiceConfiguration> {
 
 	@Override
 	public void initialize(Bootstrap<HelloServiceConfiguration> bootstrap) {
-		// nothing to do yet
+		// nothing yet
 	}
 
 	@Override
 	public void run(final HelloServiceConfiguration conf, final Environment env)
 			throws Exception {
 		HelloConfiguration messages = conf.getHelloConfiguration();
-		env.healthChecks().register("ConfigurationHealthCheck", new HelloHealthCheck(messages.getGreeting()));
+		env.healthChecks().register("ConfigurationHealthCheck",
+				new HelloHealthCheck(messages.getGreeting()));
 		env.jersey().register(new HelloResource(messages));
 
 		InternetLinkDao internetLinkDao = InternetLinkDao.instance;
@@ -39,5 +42,8 @@ public class MainService extends Application<HelloServiceConfiguration> {
 		env.jersey().register(new InternetLinksResource(internetLinkDao));
 
 		env.jersey().register(new IndexResource());
+		QuoteDao quoteDao = QuoteDao.instance;
+		// new QuoteImporter(quoteDao).importFromFile("");
+		env.jersey().register(new QuoteResource(quoteDao));
 	}
 }

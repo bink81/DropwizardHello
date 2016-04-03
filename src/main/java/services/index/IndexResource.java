@@ -16,13 +16,18 @@ public class IndexResource {
 		StringBuilder builder = new StringBuilder();
 		builder.append("<html><title>Index</title><body>");
 		builder.append("Available links:");
-		createLink(builder, assembleIndexUrl());
-		createLink(builder, assembleHelloUrl());
-		createLink(builder, assembleHelloPingUrl());
-		createLink(builder, assembleLinksUrl());
-		createLink(builder, assembleLinksUrlForName());
-		createLink(builder, assembleLinksUrlForId());
-		createLink(builder, assembleLinksUrlForCount());
+		createLink(builder, assembleLinksUrl("/"));
+		createLink(builder, assembleLinksUrl("/hello?name=A"));
+		createLink(builder, assembleLinksUrl("/hello/ping"));
+		createLink(builder, assembleLinksUrl("/link"));
+		createLink(builder, assembleLinksUrl("/link?name=A"));
+		createLink(builder, assembleLinksUrl("/link/1"));
+		createLink(builder, assembleLinksUrl("/link/count"));
+		createLink(builder, assembleLinksUrl("/quotes"));
+		createLink(builder, assembleLinksUrl("/quotes/1"));
+		createLink(builder, assembleLinksUrl("/quotes/count"));
+		createLink(builder, assembleLinksUrl("/quotes/random"));
+		createLink(builder, assembleLinksUrl("/quotes?author=A"));
 		builder.append("</body></html>");
 		return builder.toString();
 	}
@@ -32,31 +37,7 @@ public class IndexResource {
 		builder.append("<a href =\"" + url + "\">" + url + "</a>");
 	}
 
-	private String assembleIndexUrl() {
-		return WebServiceUtils.getBaseURI() + "/";
-	}
-
-	private String assembleHelloUrl() {
-		return WebServiceUtils.getBaseURI() + "/hello?name=exampleName";
-	}
-
-	private String assembleHelloPingUrl() {
-		return WebServiceUtils.getBaseURI() + "/hello/ping";
-	}
-
-	private String assembleLinksUrl() {
-		return WebServiceUtils.getBaseURI() + "/link";
-	}
-
-	private String assembleLinksUrlForName() {
-		return WebServiceUtils.getBaseURI() + "/link?name=A";
-	}
-
-	private String assembleLinksUrlForId() {
-		return WebServiceUtils.getBaseURI() + "/link/1";
-	}
-
-	private String assembleLinksUrlForCount() {
-		return WebServiceUtils.getBaseURI() + "/link/count";
+	private String assembleLinksUrl(String path) {
+		return WebServiceUtils.getBaseURI() + path;
 	}
 }
