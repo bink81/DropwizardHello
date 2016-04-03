@@ -24,7 +24,7 @@ public class FavouriteQuoteImporter extends LineByLineFileReader {
 
 	@Override
 	public void parseLine(String line) {
-		LOGGER.debug("Parsing line: {}" + line);
+		LOGGER.debug("Parsing line: {}", line);
 		if (line.trim().isEmpty()) {
 			return;
 		}
