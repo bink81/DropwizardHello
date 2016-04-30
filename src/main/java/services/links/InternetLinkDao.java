@@ -87,9 +87,7 @@ public enum InternetLinkDao {
 			String name) {
 		Preconditions.checkNotNull(type, "type must not be null!");
 		Preconditions.checkNotNull(name, "name must not be null!");
-		if (StringUtils.isBlank(name)) {
-			throw new IllegalArgumentException("name must not be empty!");
-		}
+		Preconditions.checkState(!StringUtils.isBlank(name), "name must not be empty!");
 
 		Map<InternetLinkType, Map<String, List<InternetLink>>> allTypes = groupByTypeAndName(
 				internetLinks.values());

@@ -8,6 +8,7 @@ import org.junit.Test;
 
 public class InternetLinkDaoTest {
 
+	private static final String DUMMY_NAME = "A";
 	private InternetLinkDao internetLinkDao;
 
 	@Before
@@ -24,7 +25,7 @@ public class InternetLinkDaoTest {
 
 	@Test
 	public void testGetByNameA() throws Exception {
-		Collection<InternetLink> linksWithNameA = internetLinkDao.getInternetLinksByName("A");
+		Collection<InternetLink> linksWithNameA = internetLinkDao.getInternetLinksByName(DUMMY_NAME);
 
 		Assert.assertEquals(2, linksWithNameA.size());
 	}
@@ -58,10 +59,28 @@ public class InternetLinkDaoTest {
 	}
 
 	@Test
-	public void testGetByTypeArticleAndNameA() throws Exception {
+	public void testGetByTypeArticleAndNameWithArticleAndA() throws Exception {
 		Collection<InternetLink> linksWithNameA = internetLinkDao
-				.getInternetLinksByTypeAndName(InternetLinkType.ARTICLE, "A");
+				.getInternetLinksByTypeAndName(InternetLinkType.ARTICLE, DUMMY_NAME);
 
 		Assert.assertEquals(1, linksWithNameA.size());
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testGetByTypeArticleAndNameWithNullArticleAndName() throws Exception {
+		internetLinkDao
+				.getInternetLinksByTypeAndName(null, DUMMY_NAME);
+	}
+
+	@Test(expected = NullPointerException.class)
+	public void testGetByTypeArticleAndNameWithArticleAndNullName() throws Exception {
+		internetLinkDao
+				.getInternetLinksByTypeAndName(InternetLinkType.ARTICLE, null);
+	}
+
+	@Test(expected = IllegalStateException.class)
+	public void testGetByTypeArticleAndNameWithArticleAndEmptyName() throws Exception {
+		internetLinkDao
+				.getInternetLinksByTypeAndName(InternetLinkType.ARTICLE, "");
 	}
 }

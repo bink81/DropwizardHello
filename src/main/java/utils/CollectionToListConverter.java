@@ -14,10 +14,11 @@ public class CollectionToListConverter<T> {
 
 	public List<T> convert() {
 		List<T> list;
-		if (collection instanceof List)
+		if (collection instanceof List) {
 			list = (List<T>) collection;
-		else
+		} else {
 			list = new ArrayList<T>(collection);
+		}
 		return list;
 	}
 }
