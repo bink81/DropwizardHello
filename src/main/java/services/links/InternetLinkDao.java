@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -60,7 +61,11 @@ public enum InternetLinkDao {
 	}
 
 	public String put(InternetLink internetLink) {
-		internetLinks.put(internetLink.getId(), internetLink);
+		String id = internetLink.getId();
+		if (id == null) {
+			id = UUID.randomUUID().toString();
+		}
+		internetLinks.put(id, internetLink);
 		return internetLink.getId();
 	}
 

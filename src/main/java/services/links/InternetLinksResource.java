@@ -4,6 +4,7 @@ import java.net.URI;
 import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
@@ -23,6 +24,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.JAXBElement;
+
+import com.google.common.base.Preconditions;
 
 import utils.CollectionToListConverter;
 
@@ -101,11 +104,16 @@ public class InternetLinksResource {
 
 	@POST
 	@Consumes({ MediaType.APPLICATION_FORM_URLENCODED })
-	@Produces({ MediaType.TEXT_HTML })
 	public Response createInternetLink(@FormParam("id") String id,
 			@FormParam("name") String name,
-			@FormParam("url") String url) {
-		InternetLink internetLink = new InternetLink(id, name, url, InternetLinkType.ARTICLE);
+			@FormParam("url") String url,
+			@FormParam("type") InternetLinkType type,
+			@Context HttpServletResponse servletResponse) {
+		Preconditions.checkNotNull(name, "name must not be null");
+		Preconditions.checkNotNull(url, "url must not be null");
+		Preconditions.checkNotNull(type, "type must not be null");
+
+		InternetLink internetLink = new InternetLink(id, name, url, type);
 		String newId = internetLinkDao.put(internetLink);
 		return Response.created(createNewUri(newId)).build();
 	}

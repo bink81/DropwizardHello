@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.URL;
 
-@XmlRootElement // only to generate XML
+@XmlRootElement
 public class InternetLink {
 	@NotBlank
 	private String id;
